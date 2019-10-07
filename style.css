@@ -1,0 +1,174 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-areas: "header""main";
+}
+
+header {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid slateblue;
+}
+
+/* The Modal (background) */
+.addModal,
+.editModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 1rem;
+    border: 1px solid slateblue;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* form */
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0.25rem;
+}
+
+.modal-header h5 {
+    font-size: 1.25rem;
+    margin: 0.25rem;
+}
+
+input,
+select {
+    border: 1px solid slateblue;
+    margin: 0.25rem 0.1rem 0;
+    font-size: 1rem;
+}
+
+footer {
+    padding-top: 0.5rem;
+    margin-top: 0.25rem;
+    border-top: 2px solid slateblue;
+}
+
+/* Main */
+#ToDoList {
+    width: 100%;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(150px, 1fr));
+    padding: 1rem;
+}
+
+ul.ToDoEl {
+    border: 1px solid slateblue;
+    padding: 1rem;
+    margin: 1rem;
+    list-style: none;
+    position: relative;
+    overflow: hidden;
+}
+
+ul.ToDoEl.checked li {
+    text-decoration: line-through;
+    color: #aaa;
+
+}
+
+ul.ToDoEl.checked .edit {
+    display: none;
+}
+
+ul.ToDoEl i {
+    display: none;
+}
+
+ul.ToDoEl.checked i {
+    display: block;
+    position: absolute;
+    right: -2rem;
+    bottom: -3rem;
+    color: green;
+    font-size: 10rem;
+    z-index: -1;
+}
+
+ul.ToDoEl li {
+    margin: 0.1rem;
+}
+
+/* Btn */
+#addBtn {
+    border-radius: 50%;
+    font-size: 1.5rem;
+    padding: 1rem 0.5rem;
+    background: transparent;
+    border: 2px solid slateblue
+}
+
+.delete,
+.edit,
+.done,
+.submit,
+.cancel {
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px solid slateblue;
+    margin: 0.2rem 0.05rem;
+    font-size: 1rem;
+
+}
+
+/* Tasks */
+.low {
+    color: seagreen
+}
+
+.middle {
+    color: gold;
+}
+
+.hight {
+    color: tomato;
+}
+
+.Name {
+    font-weight: 600;
+}
+
+.Description {
+    font-style: italic;
+}

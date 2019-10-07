@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>To-Do</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=cyrillic" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <header>
+            <button id="addBtn">Add</button>
+        </header>
+
+        <main id="ToDoList">
+            <!-- <ul id="item-0" class="ToDoEl checked">
+                <li class="Name">Name</li>
+                <li class="Description">Description</li>
+                <li class="low|middle|hight">Priority</li>
+                <li>Deadline</li>
+                <button class="delete" onclick="deleteTask(id)>Delete</button>
+                <button class="edit" onclick="editTask>Edit(id)</button>
+                <button class="done" onclick="doneTask>Done(id)</button>
+            </ul> -->
+        </main>
+        
+        <div id="addModal" class="addModal">
+            <form action="" method="get" class="modal-content" onsubmit="submitTask()">
+                <header class="modal-header">
+                    <h5>Add Task</h5>
+                    <span id="addClose" class="close">&times;</span>
+                </header>
+                <input type="text" name="name" id="name" placeholder="Name*" maxlength="20" required>
+                <input type="text" name="description" id="description" placeholder="Description">
+                <select name="priority" id="priority">
+                    <option value="low" class="low">Low</option>
+                    <option value="middle" class="middle">Middle</option>
+                    <option value="hight" class="hight">Hight</option>
+                </select>
+                <input type="date" name="deadline" id="deadline" placeholder="Deadline">
+                <footer class="modal-footer">
+                    <button type="submit" id="add" class="submit">Add</button>
+                    <button id="addCancel" class="cancel">Cancel</button>
+                </footer>
+            </form>
+        </div>
+
+        <div id="editModal" class="editModal">
+            <form action="" method="get" class="modal-content" id="edit-content">
+                <header class="modal-header">
+                    <h5>Edit Task</h5>
+                    <span id="editClose" class="close">&times;</span>
+                </header>
+                <input type="text" name="name" id="editName" placeholder="Name*" maxlength="20" required>
+                <input type="text" name="description" id="editDescription" placeholder="Description">
+                <select name="priority" id="editPriority">
+                    <option value="low" class="low">Low</option>
+                    <option value="middle" class="middle">Middle</option>
+                    <option value="hight" class="hight">Hight</option>
+                </select>
+                <input type="date" name="deadline" id="editDeadline" placeholder="Deadline">
+                <footer class="modal-footer">
+                    <button type="submit" id="edit" class="submit">Edit</button>
+                    <button id="editCancel" class="cancel">Cancel</button>
+                </footer>
+            </form>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+
+</html>

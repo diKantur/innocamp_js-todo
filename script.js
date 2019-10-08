@@ -9,6 +9,10 @@ function openModal() {
         addCancel = document.getElementById("addCancel"),
         addClose = document.getElementById("addClose");
 
+    let editModal = document.getElementById("editModal"),
+        editCancel = document.getElementById("editCancel"),
+        editClose = document.getElementById("editClose");
+
     addBtn.onclick = function () {
         addModal.style.display = "block";
     };
@@ -30,10 +34,6 @@ function openModal() {
         }
     };
 
-    let editModal = document.getElementById("editModal"),
-        editCancel = document.getElementById("editCancel"),
-        editClose = document.getElementById("editClose");
-
     editClose.onclick = function () {
         editModal.style.display = "none";
     };
@@ -45,17 +45,12 @@ function openModal() {
 
 function load() {
     if (localStorage.getItem('todo') != undefined) {
-        todoList = JSON.parse(localStorage.getItem('todo'));
+        todoList = getList();
         addTask(todoList);
     }
-    if (todoList == null) {
-        sortTask();
-    }
-
 }
 
-function saveData(name, description, priority, deadline, id) {
-    let temp = {};
+function saveTask(name, description, priority, deadline, id) {
 
     localStorage.setItem('name', name.value);
     localStorage.setItem('description', description.value);
@@ -66,7 +61,8 @@ function saveData(name, description, priority, deadline, id) {
     let saveName = localStorage.getItem('name'),
         saveDescription = localStorage.getItem('description'),
         savePriority = localStorage.getItem('priority'),
-        saveDeadline = localStorage.getItem('deadline');
+        saveDeadline = localStorage.getItem('deadline'),
+        temp = {};
 
     temp.check = false;
     temp.name = saveName;
@@ -77,13 +73,12 @@ function saveData(name, description, priority, deadline, id) {
 
     todoList[id] = temp;
 
-    addTask(todoList);
-    saveList(todoList);
-    load();
+    sortTask();
 }
 
-function saveList(todoList) {
+function saveList() {
     localStorage.setItem('todo', JSON.stringify(todoList));
+    load();
 }
 
 function getList() {
@@ -98,14 +93,13 @@ function submitTask() {
         priority = document.getElementById('priority'),
         deadline = document.getElementById('deadline');
 
-    saveData(name, description, priority, deadline, todoList.length);
-    sortTask();
+    saveTask(name, description, priority, deadline, todoList.length);
 }
 
 function addTask(todoList) {
-    let out = '';
+    let taskList = '';
     for (let key in todoList) {
-        out += `
+        taskList += `
         <ul id="item-${todoList[key].id}" class="ToDoEl ${(todoList[key].check == true) ? 'checked' : ''}">
             <li class="Name">${todoList[key].name}</li>
             <li class="Description">${todoList[key].description}</li>
@@ -118,22 +112,22 @@ function addTask(todoList) {
         </ul>
         `;
     }
-    main.innerHTML = out;
+    main.innerHTML = taskList;
 }
 
 // delete => удалить елемент
 function deleteTask(id) {
-    let todoList = getList().filter((item) => (item.id !== id));
-    saveList(todoList);
-    load();
+    todoList = todoList.filter((item) => (item.id !== id));
+    saveList();
 }
 
 // edit => править task
 function editTask(id) {
     editModal.style.display = "block";
 
-    const todoList = getList(),
-          todo = todoList.find((item) => (item.id === id));
+    const todo = todoList.find((item) => (item.id === id));
+    console.log(id);
+
 
     document.querySelector('#editName').value = todo.name;
     document.querySelector('#editDescription').value = todo.description;
@@ -151,12 +145,11 @@ function submitEditTask(id) {
         priority = document.getElementById('editPriority'),
         deadline = document.getElementById('editDeadline');
 
-    saveData(name, description, priority, deadline, id);
+    saveTask(name, description, priority, deadline, id);
 }
 
 // done => отметить как сделанное
 function doneTask(id) {
-    let todoList = getList();
     const todo = todoList.find((item) => (item.id === id));
 
     if (todo.check) {
@@ -165,37 +158,35 @@ function doneTask(id) {
         todo.check = true;
     }
 
-    saveList(todoList);
     sortTask();
-    load();
 }
 
 // sort boolean + by priority
 function sortTask() {
-    let todoList = getList(),
-        trueList = todoList.filter(item => item.check),
+    let trueList = todoList.filter(item => item.check),
         falseList = todoList.filter(item => !item.check),
         filter = new Map();
     filter.set('low', 1);
     filter.set('middle', 2);
     filter.set('high', 3);
+
     trueList.sort((a, b) => {
         return filter.get(a.priority) - filter.get(b.priority);
     });
     falseList = falseList.sort((a, b) => {
         return filter.get(a.priority) - filter.get(b.priority);
     });
-    todoList = falseList.concat(trueList);
 
-    addTask(todoList);
-    saveList(todoList);
+    todoList = falseList.concat(trueList);
+    todoList.map((value, index) => value.id = index);
+    saveList();
 }
 
 //search by text
 function searchText() {
     main.innerHTML = '';
     let todoList = getList();
-    const val = document.getElementById('search').value.toLowerCase()
+    const val = document.getElementById('search').value.toLowerCase();
     todoList = todoList.filter(item => (item.name.includes(val) || item.description.includes(val)));
 
     addTask(todoList);

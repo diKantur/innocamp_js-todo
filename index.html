@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>To-Do</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap&subset=cyrillic" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap&subset=cyrillic" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
     </head>
@@ -15,17 +15,18 @@
     <body>
         <header>
             <button id="addBtn">Add</button>
+            <input type="search" name="search" id="search" placeholder="search" oninput="searchText()">
         </header>
 
         <main id="ToDoList">
             <!-- <ul id="item-0" class="ToDoEl checked">
-                <li class="Name">Name</li>
-                <li class="Description">Description</li>
-                <li class="low|middle|hight">Priority</li>
-                <li>Deadline</li>
-                <button class="delete" onclick="deleteTask(id)>Delete</button>
-                <button class="edit" onclick="editTask>Edit(id)</button>
-                <button class="done" onclick="doneTask>Done(id)</button>
+                <li id="Name">Name</li>
+                <li id="Description">Description</li>
+                <li id="Priority">Priority</li>
+                <li id="Deadline">Deadline</li>
+                <button class="delete" onclick="deleteTask()">Delete</button>
+                <button class="edit" onclick="editTask()">Edit</button>
+                <button class="done" onclick="doneTask()">Done</button>
             </ul> -->
         </main>
         
@@ -40,7 +41,7 @@
                 <select name="priority" id="priority">
                     <option value="low" class="low">Low</option>
                     <option value="middle" class="middle">Middle</option>
-                    <option value="hight" class="hight">Hight</option>
+                    <option value="high" class="high">High</option>
                 </select>
                 <input type="date" name="deadline" id="deadline" placeholder="Deadline">
                 <footer class="modal-footer">
@@ -61,7 +62,7 @@
                 <select name="priority" id="editPriority">
                     <option value="low" class="low">Low</option>
                     <option value="middle" class="middle">Middle</option>
-                    <option value="hight" class="hight">Hight</option>
+                    <option value="high" class="high">High</option>
                 </select>
                 <input type="date" name="deadline" id="editDeadline" placeholder="Deadline">
                 <footer class="modal-footer">

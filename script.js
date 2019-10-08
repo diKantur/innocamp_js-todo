@@ -31,8 +31,8 @@ function openModal() {
     };
 
     let editModal = document.getElementById("editModal"),
-    editCancel = document.getElementById("editCancel"),
-    editClose = document.getElementById("editClose");
+        editCancel = document.getElementById("editCancel"),
+        editClose = document.getElementById("editClose");
 
     editClose.onclick = function () {
         editModal.style.display = "none";
@@ -46,7 +46,7 @@ function openModal() {
 function load() {
     if (localStorage.getItem('todo') != undefined) {
         todoList = JSON.parse(localStorage.getItem('todo'));
-        addTask();
+        addTask(todoList);
     }
     if (todoList == null) {
         sortTask();
@@ -77,7 +77,7 @@ function saveData(name, description, priority, deadline, id) {
 
     todoList[id] = temp;
 
-    addTask();
+    addTask(todoList);
     saveList(todoList);
     load();
 }
@@ -102,14 +102,14 @@ function submitTask() {
     sortTask();
 }
 
-function addTask() {
+function addTask(todoList) {
     let out = '';
     for (let key in todoList) {
         out += `
         <ul id="item-${todoList[key].id}" class="ToDoEl ${(todoList[key].check == true) ? 'checked' : ''}">
             <li class="Name">${todoList[key].name}</li>
             <li class="Description">${todoList[key].description}</li>
-            <li class="${todoList[key].priority == 'low' ? 'low' : todoList[key].priority == 'middle' ? 'middle' : 'hight'}">${todoList[key].priority}</li>
+            <li class="${todoList[key].priority == 'low' ? 'low' : todoList[key].priority == 'middle' ? 'middle' : 'high'}">${todoList[key].priority}</li>
             <li>${todoList[key].deadline}</li>
             <button class="delete" onclick="deleteTask(${todoList[key].id})">Delete</button>
             <button class="edit" onclick="editTask(${todoList[key].id})">Edit</button>
@@ -133,7 +133,7 @@ function editTask(id) {
     editModal.style.display = "block";
 
     const todoList = getList(),
-        todo = todoList.find((item) => (item.id === id));
+          todo = todoList.find((item) => (item.id === id));
 
     document.querySelector('#editName').value = todo.name;
     document.querySelector('#editDescription').value = todo.description;
@@ -165,16 +165,38 @@ function doneTask(id) {
         todo.check = true;
     }
 
-    sortTask();
     saveList(todoList);
+    sortTask();
     load();
 }
 
-// sort
+// sort boolean + by priority
 function sortTask() {
-    const todoList = getList();
-    todoList.sort((a, b) => a.check - b.check);
-    addTask();
+    let todoList = getList(),
+        trueList = todoList.filter(item => item.check),
+        falseList = todoList.filter(item => !item.check),
+        filter = new Map();
+    filter.set('low', 1);
+    filter.set('middle', 2);
+    filter.set('high', 3);
+    trueList.sort((a, b) => {
+        return filter.get(a.priority) - filter.get(b.priority);
+    });
+    falseList = falseList.sort((a, b) => {
+        return filter.get(a.priority) - filter.get(b.priority);
+    });
+    todoList = falseList.concat(trueList);
+
+    addTask(todoList);
     saveList(todoList);
-    load();
+}
+
+//search by text
+function searchText() {
+    main.innerHTML = '';
+    let todoList = getList();
+    const val = document.getElementById('search').value.toLowerCase()
+    todoList = todoList.filter(item => (item.name.includes(val) || item.description.includes(val)));
+
+    addTask(todoList);
 }

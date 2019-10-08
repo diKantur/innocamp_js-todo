@@ -6,8 +6,6 @@
 body {
     margin: 0;
     padding: 0;
-    display: grid;
-    grid-template-areas: "header""main";
 }
 
 header {

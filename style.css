@@ -94,8 +94,8 @@ footer {
     width: 100%;
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    grid-template-rows: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(150px, 1fr));
     padding: 1rem;
 }
 
@@ -142,7 +142,11 @@ ul.ToDoEl li {
     font-size: 1.5rem;
     padding: 1rem 0.5rem;
     background: transparent;
-    border: 2px solid slateblue
+    border: 2px solid slateblue;
+}
+
+#addBtn:focus {
+    outline: none;
 }
 
 .delete,
